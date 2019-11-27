@@ -13,24 +13,18 @@ class CreatPessoasTable extends Migration
      */
     public function up()
     {
-        Schema::create('enderecos', function (Blueprint $table) {
+        Schema::create('pessoas', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('pessoa_id')->unsigned();
-            $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete('cascade');
-
-            $table->string('cep', 8);
-            $table->string('logradouro');
-            $table->string('numero');
-            $table->string('complemento')->nullable();
-            $table->string('bairro');
-
-            $table->integer('cidade_id')->unsigned();
-            $table->foreign('cidade_id')->references('id')->on('cidades');
-
+            $table->string('nome', 30);
+            $table->string('sobre_nome', 30);
+            $table->string('cpf', 11)->unique();
+            $table->string('rg', 14)->unique();
+            $table->date('nascimento')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -39,6 +33,6 @@ class CreatPessoasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('enderecos');
+        Schema::drop('pessoas');
     }
 }
