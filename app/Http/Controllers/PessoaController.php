@@ -28,12 +28,12 @@ class PessoaController extends Controller
    */
   public function store(Request $request)
   {
-    $person = new Pessoa;
-    $person->nome = $request->nome;
-    $person->sobrenome = $request->sobrenome;
-    $person->cpf = $request->cpf;
-    $person->rg = $request->rg;
-    $person->save();
+      $person = $request->all();
+      $person['cpf'] = str_replace(' ', '', str_replace('.', '', str_replace('-', '', $request->cpf)));
+      $person['rg'] = str_replace(' ', '', str_replace('.', '', str_replace('-', '', $request->rg)));
+
+      Pessoa::create($person);
+
     return redirect()->route('person.index')->with('message', 'Pessoa criada com sucesso!');
   }
 
@@ -53,8 +53,8 @@ class PessoaController extends Controller
     $person = Pessoa::findOrFail($id);
     $person->nome = $request->nome;
     $person->sobrenome = $request->sobrenome;
-    $person->cpf = $request->cpf;
-    $person->rg = $request->rg;
+    $person->cpf = str_replace(' ', '', str_replace('.', '', str_replace('-', '', $request->cpf)));
+    $person->rg = str_replace(' ', '', str_replace('.', '', str_replace('-', '', $request->rg)));
     $person->save();
     return redirect()->route('person.index')->with('message', 'Pessoa alterada com sucesso!');
   }

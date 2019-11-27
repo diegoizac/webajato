@@ -126,7 +126,7 @@
                                                         </td>
                                                         <td>{{ $pessoa->nome}}</td>
                                                         <td>{{ $pessoa->sobrenome}}</td>
-                                                        <td>{{ $pessoa->cpf }}</td>
+                                                        <td>{{Utils::mask($pessoa->cpf, Mask::CPF)}}</td>
                                                         <td>
                                                             <a href="{{route('person.edit', $pessoa->id) }}" class="btn btn-info btn-xs" data-toggle="tooltip"
                                                                data-placement="top" title="Alterar">
