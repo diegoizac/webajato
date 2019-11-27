@@ -81,48 +81,104 @@
                     <h4 id="center"><b>CADASTRO DOS DADOS DO CLIENTE</b></h4>
                     <br>
                     <form method="post"
-                          action="{{route('person.store')}}"
-                          enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" name="nome"
-                                       class="form-control"
-                                       required>
+                        action="{{route('person.store')}}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="col-12">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Dados do cliente
+                                </div>
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nome">Nome</label>
+                                            <input type="text" name="user['nome']"
+                                                    class="form-control"
+                                                    required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sobrenome">Sobrenome</label>
+                                            <input type="text" name="user['sobrenome']"
+                                                    class="form-control"
+                                                    required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="cpf">CPF</label>
+                                            <input type="text" name="user['cpf']"
+                                                    class="form-control"
+                                                    required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="rg">RG</label>
+                                            <input type="text" name="user['rg']"
+                                                    class="form-control"
+                                                    required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Endere&ccedil;o do cliente
+                                </div>
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <label for="nome">CEP</label>
+                                        <div class="input-group">
+                                            <input id="cep" type="text" name="address['cep']"
+                                                    class="form-control">
+                                            <span class="input-group-btn">
+                                                <input type="button" class="btn btn-info" value="pesquisar" id="pesquisaCep">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label for="sobrenome">Logradoro</label>
+                                            <input type="text" id="logradoro" name="adress['logradoro']"
+                                                    class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label for="cidade">Cidade</label>
+                                            <input type="text" id="cidade" name="address['cidade']"
+                                                    class="form-control"
+                                                    required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="cidade">Bairro</label>
+                                            <input type="text" id="bairro" name="address['bairro']"
+                                                    class="form-control"
+                                                    required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="sobrenome">Sobrenome</label>
-                                <input type="text" name="sobrenome"
-                                       class="form-control"
-                                       required>
+
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Contato
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-3">
+                                    <input type="text" name="cep" id="cep">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="cpf">CPF</label>
-                                <input type="text" name="cpf"
-                                       class="form-control"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="rg">RG</label>
-                                <input type="text" name="rg"
-                                       class="form-control"
-                                       required>
-                            </div>
-                        </div>
-{{--                        <div class="col-md-6">--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label for="name"> Nascimento </label>--}}
-{{--                                <input type="date" name="name"--}}
-{{--                                       class="form-control">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+
+
                         <div class="col-md-12">
                             <button type="submit"
                                     class="btn btn-success" id="black">
@@ -133,5 +189,18 @@
                 </div>
             </div>
         </div>
+        <script>
+            $('#pesquisaCep').click(function () {
+                $.ajax({
+                    url: `https://viacep.com.br/ws/${$('#cep').val()}/json`,
+                    method: 'GET',
+                    success: function(result) {
+                        $('#logradoro').val(result.logradouro);
+                        $('#cidade').val(result.localidade);
+                        $('#bairro').val(result.bairro);
+                    }
+                })
+            });
+        </script>
     </body>
 </html>

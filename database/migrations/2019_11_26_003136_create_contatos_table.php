@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatEnderecosTable extends Migration
+class CreateContatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,15 @@ class CreatEnderecosTable extends Migration
      */
     public function up()
     {
-        Schema::create('enderecos', function (Blueprint $table) {
+        Schema::create('contatos', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('pessoa_id')->unsigned();
             $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete('cascade');
 
-            $table->string('cep', 8);
-            $table->string('logradouro');
-            $table->string('numero');
-            $table->string('complemento')->nullable();
-            $table->string('bairro');
-
-            $table->integer('cidade_id')->unsigned();
-            $table->foreign('cidade_id')->references('id')->on('cidades');
-
-            $table->string('tipo');
+            $table->string('telefone', 11)->nullable();
+            $table->string('celular', 11)->nullable();
+            $table->string('email')->nullable();
 
             $table->timestamps();
         });
@@ -41,6 +34,6 @@ class CreatEnderecosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('enderecos');
+        Schema::drop('contatos');
     }
 }
